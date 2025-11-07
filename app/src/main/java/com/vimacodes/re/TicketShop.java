@@ -22,9 +22,9 @@ public class TicketShop {
                     for (int j = 0; j <= k; j++) {
                         int ticketCount = DP[i][j];
                         if (ticketCount != 0) {
-                            update(newDP, i + ticket, j, ticketCount + 1);
+                            update(newDP, D, i + ticket, j, ticketCount + 1);
                             if (j > 0) {
-                                update(newDP, i + 2 * ticket, j - 1, ticketCount + 1);
+                                update(newDP, D, i + 2 * ticket, j - 1, ticketCount + 1);
                             }
                         }
                     }
@@ -32,9 +32,9 @@ public class TicketShop {
                 DP = copy(newDP, D, k);
             }
 
-            update(DP, ticket, k, 1);
+            update(DP, D, ticket, k, 1);
             if (k > 0) {
-                update(DP, 2 * ticket, k-1, 1);
+                update(DP, D, 2 * ticket, k-1, 1);
             }
         }
 
@@ -42,8 +42,8 @@ public class TicketShop {
         return min(DP[D]);
     }
 
-    private static void update(int[][] DP, int distance, int k, int ticketCount) {
-        if (distance < 0 || distance > 20) {
+    private static void update(int[][] DP, int D, int distance, int k, int ticketCount) {
+        if (distance < 0 || distance > D) {
             return;
         }
 
