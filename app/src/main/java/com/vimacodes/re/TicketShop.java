@@ -1,7 +1,5 @@
 package com.vimacodes.re;
 
-import java.util.Arrays;
-
 public class TicketShop {
 
     int minTickets(int[] A, int k, int D) {
