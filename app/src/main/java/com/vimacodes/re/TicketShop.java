@@ -39,6 +39,7 @@ public class TicketShop {
         }
 
         // get the minimum ticket count in the "final" distance (last row)
+        print(DP);
         return min(DP[D]);
     }
 
@@ -72,5 +73,17 @@ public class TicketShop {
             }
         }
         return min;
+    }
+
+    /**
+     * Prints the matrix (rotated)
+     */
+    private void print(int[][] DP) {
+        for (int j = 0; j < DP[0].length; j++) {
+            for (int i = 0; i < DP.length; i++) {
+                System.out.print(DP[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
