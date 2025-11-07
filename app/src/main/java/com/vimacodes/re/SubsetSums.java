@@ -20,7 +20,6 @@ public class SubsetSums {
                     // if we already have remainder 'j'
                     if (rem[j]) {
                         save(rem, j - num);
-                        save(rem, j - 2 * num);
                         save(rem, j - 3 * num);
                     }
                 }
@@ -28,7 +27,6 @@ public class SubsetSums {
 
             // at last we save remainder with this number only, as if no other values were used
             save(rem, b - num);
-            save(rem, b - 2 * num);
             save(rem, b - 3 * num);
 
             // if we get remainder == 0, then we're good (could be optimally checked after every save)
