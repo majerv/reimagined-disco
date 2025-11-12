@@ -24,9 +24,7 @@ public class TicketShop {
     }
 
     private static void update(int[][] DP, int D, int k, int distance, int usedK, int ticketCount) {
-        if (distance < 0 || distance > D || usedK > k) {
-            return;
-        }
+        if (distance < 0 || distance > D || usedK > k) return;
 
         int currentCounter = DP[distance][usedK];
         if (currentCounter == 0 || currentCounter > ticketCount) {
