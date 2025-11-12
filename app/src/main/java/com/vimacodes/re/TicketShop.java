@@ -3,8 +3,6 @@ package com.vimacodes.re;
 public class TicketShop {
 
     int minTickets(int[] A, int k, int D) {
-        int n = A.length;
-
         int[][] DP = new int[D + 1][k + 1];
 
         for (int ticket : A) {
@@ -39,9 +37,7 @@ public class TicketShop {
     private static int min(int[] DF) {
         int min = Integer.MAX_VALUE;
         for (int val : DF) {
-            if (val != 0 && val < min) {
-                min = val;
-            }
+            if (val != 0 ) min = Math.min(min, val);
         }
         return min;
     }
