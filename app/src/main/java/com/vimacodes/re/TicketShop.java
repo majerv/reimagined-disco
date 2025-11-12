@@ -5,85 +5,44 @@ public class TicketShop {
     int minTickets(int[] A, int k, int D) {
         int n = A.length;
 
-        int[][] DP = new int[D+1][k+1];
-        for (int i = 0; i <= D; i++) {
-            for (int j = 0; j <= k; j++) {
-                DP[i][j] = 0;
-            }
-        }
+        int[][] DP = new int[D + 1][k + 1];
 
-        for (int t = 0; t < n; t++) {
-            int ticket = A[t];
-
-            // not in the first round
-            if (t > 0) {
-                int[][] newDP = copy(DP, D, k);
-                for (int i = 0; i <= D; i++) {
-                    for (int j = 0; j <= k; j++) {
-                        int ticketCount = DP[i][j];
-                        if (ticketCount != 0) {
-                            update(newDP, D, i + ticket, j, ticketCount + 1);
-                            if (j > 0) {
-                                update(newDP, D, i + 2 * ticket, j - 1, ticketCount + 1);
-                            }
-                        }
+        for (int ticket : A) {
+            for (int i = D; i >= 0; i--) {
+                for (int j = k; j >= 0; j--) {
+                    int ticketCount = DP[i][j];
+                    if (ticketCount != 0) {
+                        update(DP, D, k, i + ticket, j, ticketCount + 1);
+                        update(DP, D, k, i + 2 * ticket, j + 1, ticketCount + 1);
                     }
                 }
-                DP = copy(newDP, D, k);
             }
 
-            update(DP, D, ticket, k, 1);
-            if (k > 0) {
-                update(DP, D, 2 * ticket, k-1, 1);
-            }
+            update(DP, D, k, ticket, 0, 1);
+            update(DP, D, k, 2 * ticket, 1, 1);
         }
 
-        // get the minimum ticket count in the "final" distance (last row)
-        print(DP);
         return min(DP[D]);
     }
 
-    private static void update(int[][] DP, int D, int distance, int k, int ticketCount) {
-        if (distance < 0 || distance > D) {
+    private static void update(int[][] DP, int D, int k, int distance, int usedK, int ticketCount) {
+        if (distance < 0 || distance > D || usedK > k) {
             return;
         }
 
-        int currentCounter = DP[distance][k];
+        int currentCounter = DP[distance][usedK];
         if (currentCounter == 0 || currentCounter > ticketCount) {
-            DP[distance][k] = ticketCount;
+            DP[distance][usedK] = ticketCount;
         }
-    }
-
-    private static int[][] copy(int[][] DP, int D, int k) {
-        int [][] newDP = new int[D+1][k+1];
-        for(int i = 0; i <= D; i++){
-            for (int j = 0; j <= k; j++){
-                newDP[i][j] = DP[i][j];
-            }
-        }
-        return newDP;
     }
 
     private static int min(int[] DF) {
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < DF.length; i++) {
-            int val = DF[i];
-            if (val !=0 && val < min) {
+        for (int val : DF) {
+            if (val != 0 && val < min) {
                 min = val;
             }
         }
         return min;
-    }
-
-    /**
-     * Prints the matrix (rotated)
-     */
-    private void print(int[][] DP) {
-        for (int j = 0; j < DP[0].length; j++) {
-            for (int i = 0; i < DP.length; i++) {
-                System.out.print(DP[i][j] + " ");
-            }
-            System.out.println();
-        }
     }
 }
